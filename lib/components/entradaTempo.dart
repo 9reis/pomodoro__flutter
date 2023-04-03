@@ -7,10 +7,14 @@ class EntradaTempo extends StatelessWidget {
     Key? key,
     required this.titulo,
     required this.valor,
+    this.inc,
+    this.dec,
   }) : super(key: key);
 
   final String titulo;
   final int valor;
+  final void Function()? inc;
+  final void Function()? dec;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,7 @@ class EntradaTempo extends StatelessWidget {
                 padding: EdgeInsets.all(15),
                 primary: Colors.red,
               ),
-              onPressed: () {},
+              onPressed: this.dec,
             ),
             Text(
               '${this.valor} min',
@@ -55,7 +59,7 @@ class EntradaTempo extends StatelessWidget {
                 padding: EdgeInsets.all(15),
                 primary: Colors.red,
               ),
-              onPressed: () {},
+              onPressed: this.inc,
             ),
           ],
         ),
