@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mobx/mobx.dart';
 
 part 'pomodoro.store.g.dart';
@@ -23,21 +25,40 @@ abstract class _PomodoroStore with Store {
   int tempoDescanso = 1;
 
   @observable
-  TipoIntervalo tipoIntervalo = TipoIntervalo.DESCANSO;
+  TipoIntervalo tipoIntervalo = TipoIntervalo.TRABALHO;
+
+  // Controla o Cronometro
+  Timer? cronometro;
 
   @action
   void iniciar() {
     iniciado = true;
+    cronometro = Timer.periodic(
+      Duration(
+        seconds: 1,
+      ),
+      (timer) {
+        if (minutos == 0 && segundos == 0) {
+          _trocarTIpoIntervalo();
+        } else if (segundos == 0) {
+          segundos = 59;
+          minutos--;
+        } else {
+          segundos--;
+        }
+      },
+    );
   }
 
   @action
   void parar() {
     iniciado = false;
+    cronometro?.cancel();
   }
 
   @action
   void reiniciar() {
-    iniciado = false;
+    parar();
   }
 
   @action
@@ -66,5 +87,16 @@ abstract class _PomodoroStore with Store {
 
   bool estaDescansando() {
     return tipoIntervalo == TipoIntervalo.DESCANSO;
+  }
+
+  void _trocarTIpoIntervalo() {
+    if (estaTrabalhando()) {
+      tipoIntervalo = TipoIntervalo.DESCANSO;
+      minutos = tempoDescanso;
+    } else {
+      tipoIntervalo = TipoIntervalo.TRABALHO;
+      minutos = tempoTrabalho;
+    }
+    segundos = 0;
   }
 }
