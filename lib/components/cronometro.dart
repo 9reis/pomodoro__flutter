@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:pomodoro__flutter/components/cronometro_botao.dart';
-import 'package:pomodoro__flutter/store/pomodoro.store.dart';
+
+import 'package:pomodoro__flutter/components/CronometroBotao.dart';
 import 'package:provider/provider.dart';
+import '../store/pomodoro.store.dart';
 
 class Cronometro extends StatelessWidget {
   const Cronometro({super.key});
@@ -20,16 +21,19 @@ class Cronometro extends StatelessWidget {
             children: [
               Text(
                 store.estaTrabalhando()
-                    ? 'Hora de Trabalhar '
+                    ? 'Hora de Trabalhar'
                     : 'Hora de Descansar',
-                style: const TextStyle(fontSize: 40, color: Colors.white),
+                style: const TextStyle(
+                  fontSize: 40,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 20),
               Text(
                 '${store.minutos.toString().padLeft(2, '0')}:${store.segundos.toString().padLeft(2, '0')}',
                 style: const TextStyle(
-                  color: Colors.white,
                   fontSize: 120,
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(height: 20),

@@ -6,7 +6,7 @@ part 'pomodoro.store.g.dart';
 
 class PomodoroStore = _PomodoroStore with _$PomodoroStore;
 
-enum TipoIntervalo { TRABALHO, DESCANSO }
+enum TipoIntervalo { trabalho, descanso }
 
 abstract class _PomodoroStore with Store {
   @observable
@@ -25,29 +25,23 @@ abstract class _PomodoroStore with Store {
   int tempoDescanso = 1;
 
   @observable
-  TipoIntervalo tipoIntervalo = TipoIntervalo.TRABALHO;
+  TipoIntervalo tipoIntervalo = TipoIntervalo.trabalho;
 
-  // Controla o Cronometro
   Timer? cronometro;
 
   @action
   void iniciar() {
     iniciado = true;
-    cronometro = Timer.periodic(
-      Duration(
-        seconds: 1,
-      ),
-      (timer) {
-        if (minutos == 0 && segundos == 0) {
-          _trocarTIpoIntervalo();
-        } else if (segundos == 0) {
-          segundos = 59;
-          minutos--;
-        } else {
-          segundos--;
-        }
-      },
-    );
+    cronometro = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (minutos == 0 && segundos == 0) {
+        _trocarTipoIntervalo();
+      } else if (segundos == 0) {
+        segundos = 59;
+        minutos--;
+      } else {
+        segundos--;
+      }
+    });
   }
 
   @action
@@ -96,19 +90,19 @@ abstract class _PomodoroStore with Store {
   }
 
   bool estaTrabalhando() {
-    return tipoIntervalo == TipoIntervalo.TRABALHO;
+    return tipoIntervalo == TipoIntervalo.trabalho;
   }
 
   bool estaDescansando() {
-    return tipoIntervalo == TipoIntervalo.DESCANSO;
+    return tipoIntervalo == TipoIntervalo.descanso;
   }
 
-  void _trocarTIpoIntervalo() {
+  void _trocarTipoIntervalo() {
     if (estaTrabalhando()) {
-      tipoIntervalo = TipoIntervalo.DESCANSO;
+      tipoIntervalo = TipoIntervalo.descanso;
       minutos = tempoDescanso;
     } else {
-      tipoIntervalo = TipoIntervalo.TRABALHO;
+      tipoIntervalo = TipoIntervalo.trabalho;
       minutos = tempoTrabalho;
     }
     segundos = 0;
