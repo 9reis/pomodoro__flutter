@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData tema = ThemeData();
+
     return MultiProvider(
       providers: [
         Provider<PomodoroStore>(
@@ -20,10 +22,13 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: tema.copyWith(
+            colorScheme: tema.colorScheme.copyWith(
+          primary: Colors.indigo,
+          secondary: Colors.cyan,
+        )),
         home: const Pomodoro(),
       ),
     );
@@ -61,6 +66,7 @@ class MyApp extends StatelessWidget {
 //         ),
 //       ),
 //       floatingActionButton: FloatingActionButton(
+        //  backgroundColors: Theme.of(context).colorScheme.secondary;
 //         onPressed: store.incrementar,
 //         tooltip: 'Increment',
 //         child: const Icon(Icons.add),
