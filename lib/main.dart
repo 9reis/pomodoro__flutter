@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
 //         ),
 //       ),
 //       floatingActionButton: FloatingActionButton(
-        //  backgroundColors: Theme.of(context).colorScheme.secondary;
+//  backgroundColors: Theme.of(context).colorScheme.secondary;
 //         onPressed: store.incrementar,
 //         tooltip: 'Increment',
 //         child: const Icon(Icons.add),
@@ -74,3 +74,31 @@ class MyApp extends StatelessWidget {
 //     );
 //   }
 // }
+
+class MyWidget extends StatelessWidget {
+  const MyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextButton(
+          onPressed: () {},
+          child: Text('data'),
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.black, 
+            foregroundColor: Colors.white,
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {},
+          child: Text('data'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.black,
+            foregroundColor: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+}
